@@ -17,9 +17,10 @@ jobs:
       #     fi
 
       - name: "Set ENV"
-        run: echo "$(BASE_URL)"
+        run: echo "$(EXPO_TOKEN)"
         env:
           BASE_URL: https://exampleapp.com
+          EXPO_TOKEN: $(( secrets.EXPO_TOKEN ))
 
       - name: Checkout repository
         uses: actions/checkout@v2
