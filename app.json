@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ccf7311d-acb0-467d-a091-804a930a17c0"
+      }
+    },
+    "owner": "mykhailomashchenko"
   }
 }
