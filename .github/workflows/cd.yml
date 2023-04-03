@@ -17,7 +17,7 @@ jobs:
       #     fi
 
       - name: "Set ENV"
-        run: echo "$(EXPO_TOKEN)"
+        run: echo "$(( secrets.EXPO_TOKEN ))"
         env:
           BASE_URL: https://exampleapp.com
           EXPO_TOKEN: $(( secrets.EXPO_TOKEN ))
