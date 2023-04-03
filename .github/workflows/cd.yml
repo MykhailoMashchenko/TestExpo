@@ -9,18 +9,17 @@ jobs:
     name: EAS build
     runs-on: ubuntu-latest
     steps:
-      # - name: Check for EXPO_TOKEN
-      #   run: |
-      #     if [ -z "$(( secrets.EXPO_TOKEN ))" ]; then
-      #       echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
-      #       exit 1
-      #     fi
+      - name: Check for EXPO_TOKEN
+        run: |
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+            exit 1
+          fi
 
       - name: "Set ENV"
-        run: echo "$(( secrets.EXPO_TOKEN ))"
+        run: echo "$(BASE_URL)"
         env:
           BASE_URL: https://exampleapp.com
-          EXPO_TOKEN: $(( secrets.EXPO_TOKEN ))
 
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -36,7 +35,7 @@ jobs:
         with:
           expo-version: latest
           eas-version: latest
-          token: $(( secrets.EXPO_TOKEN ))
+          token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Find yarn cache
         id: yarn-cache-path
@@ -45,9 +44,9 @@ jobs:
       - name: Restore cache
         uses: actions/cache@v2
         with:
-          path: "$(( steps.yarn-cache-path.outputs.dir ))"
-          key: "$(( runner.os ))-yarn-$(( hashFiles('**/yarn.lock') ))"
-          restore-keys: "$(( runner.os ))-yarn-"
+          path: "${{ steps.yarn-cache-path.outputs.dir }}"
+          key: "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          restore-keys: "${{ runner.os }}-yarn-"
 
       - name: Install dependencies
         run: yarn install --immutable
